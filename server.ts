@@ -1,9 +1,11 @@
-```ts
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import { createServer as createViteServer } from "vite";
-import { evaluateSpeakingWithBrain, evaluateWritingWithBrain } from "./src/utils/ieltsBrain";
+import {
+  evaluateSpeakingWithBrain,
+  evaluateWritingWithBrain,
+} from "./src/utils/ieltsBrain";
 
 dotenv.config();
 
@@ -46,7 +48,7 @@ async function groqChat(prompt: string): Promise<string | null> {
     const response = await fetch(`${GROQ_API_URL}/chat/completions`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -69,10 +71,7 @@ async function groqChat(prompt: string): Promise<string | null> {
 
       console.error("Groq API error:", response.status, errorText);
 
-      if (
-        response.status === 401 ||
-        response.status === 403
-      ) {
+      if (response.status === 401 || response.status === 403) {
         markGroqDenied();
       }
 
@@ -135,7 +134,6 @@ app.post("/api/analyze-writing", async (req, res) => {
             ? "adequate"
             : "good";
 
-    // EMPTY RESPONSE
     if (wordCount === 0) {
       const zeroResult = evaluateWritingWithBrain({
         task,
@@ -151,7 +149,6 @@ app.post("/api/analyze-writing", async (req, res) => {
       });
     }
 
-    // VERY SHORT RESPONSE
     if (wordCount < 35) {
       const fragmentResult = evaluateWritingWithBrain({
         task,
@@ -168,7 +165,6 @@ app.post("/api/analyze-writing", async (req, res) => {
       });
     }
 
-    // GROQ AI
     const prompt = `You are a certified IELTS Academic Writing Senior Examiner.
 
 Evaluate this candidate response according to the official IELTS 9-band descriptors with PRECISE half-band differentiation.
@@ -266,7 +262,6 @@ Return ONLY raw JSON.`;
       }
     }
 
-    // FALLBACK BRAIN
     const brainResult = evaluateWritingWithBrain({
       task,
       question,
@@ -280,7 +275,6 @@ Return ONLY raw JSON.`;
       wordCountStatus,
       isAiPowered: false,
     });
-
   } catch (err: any) {
     console.error("Error analyzing writing:", err);
 
@@ -313,7 +307,6 @@ app.post("/api/analyze-speaking", async (req, res) => {
 
     const wordCount = words.length;
 
-    // EMPTY
     if (wordCount === 0) {
       const zeroResult = evaluateSpeakingWithBrain({
         question,
@@ -329,7 +322,6 @@ app.post("/api/analyze-speaking", async (req, res) => {
       });
     }
 
-    // VERY SHORT
     if (wordCount < 15) {
       const fragmentResult = evaluateSpeakingWithBrain({
         question,
@@ -345,7 +337,6 @@ app.post("/api/analyze-speaking", async (req, res) => {
       });
     }
 
-    // GROQ AI
     const prompt = `You are an official Senior IELTS Speaking Examiner.
 
 Evaluate this candidate's Part ${part} speech response transcript according to IELTS assessment criteria.
@@ -430,7 +421,6 @@ Return ONLY raw JSON.`;
       }
     }
 
-    // FALLBACK BRAIN
     const brainResult = evaluateSpeakingWithBrain({
       question,
       transcript: cleanTranscript,
@@ -443,7 +433,6 @@ Return ONLY raw JSON.`;
       transcript: cleanTranscript,
       isAiPowered: false,
     });
-
   } catch (err: any) {
     console.error("Error analyzing speaking:", err);
 
@@ -476,7 +465,6 @@ app.post("/api/transcribe-and-evaluate-audio", async (req, res) => {
       !!audioBase64 &&
       audioBase64.length > 800;
 
-    // NO ATTEMPT
     if (!hasAudio && !cleanTranscript) {
       const zeroResult = evaluateSpeakingWithBrain({
         question,
@@ -495,10 +483,6 @@ app.post("/api/transcribe-and-evaluate-audio", async (req, res) => {
     }
 
     let candidateTranscript = cleanTranscript;
-
-    // -----------------------------------------------------
-    // GROQ WHISPER AUDIO TRANSCRIPTION
-    // -----------------------------------------------------
 
     if (isGroqAvailable() && hasAudio) {
       try {
@@ -551,18 +535,17 @@ app.post("/api/transcribe-and-evaluate-audio", async (req, res) => {
           "json"
         );
 
-        const transcriptionResponse =
-          await fetch(
-            `${GROQ_API_URL}/audio/transcriptions`,
-            {
-              method: "POST",
-              headers: {
-                "Authorization":
-                  `Bearer ${process.env.GROQ}`,
-              },
-              body: formData,
-            }
-          );
+        const transcriptionResponse = await fetch(
+          `${GROQ_API_URL}/audio/transcriptions`,
+          {
+            method: "POST",
+            headers: {
+              Authorization:
+                `Bearer ${process.env.GROQ}`,
+            },
+            body: formData,
+          }
+        );
 
         if (!transcriptionResponse.ok) {
           const errorText =
@@ -587,7 +570,6 @@ app.post("/api/transcribe-and-evaluate-audio", async (req, res) => {
           candidateTranscript =
             (transcription?.text || "").trim();
         }
-
       } catch (transcriptionError) {
         console.error(
           "Groq audio transcription failed:",
@@ -596,21 +578,16 @@ app.post("/api/transcribe-and-evaluate-audio", async (req, res) => {
       }
     }
 
-    // -----------------------------------------------------
-    // NO TRANSCRIPT FALLBACK
-    // -----------------------------------------------------
-
     if (
       !candidateTranscript &&
       durationSeconds >= 4
     ) {
       candidateTranscript =
-        `In response to the prompt about ${question.slice(0, 40)}, I would like to explain my perspective and share my personal experience. Throughout this situation, there were several crucial factors that contributed significantly to the outcome. Furthermore, looking at it comprehensively, it provided valuable insights into effective communication and problem solving.`;
+        `In response to the prompt about ${question.slice(
+          0,
+          40
+        )}, I would like to explain my perspective and share my personal experience. Throughout this situation, there were several crucial factors that contributed significantly to the outcome. Furthermore, looking at it comprehensively, it provided valuable insights into effective communication and problem solving.`;
     }
-
-    // -----------------------------------------------------
-    // AI EVALUATION OF TRANSCRIPT
-    // -----------------------------------------------------
 
     if (
       candidateTranscript &&
@@ -703,7 +680,6 @@ Return ONLY raw JSON.`;
             evaluationMode:
               "groq-whisper-and-ai-analysis",
           });
-
         } catch (parseError) {
           console.error(
             "Groq audio evaluation JSON parse error:",
@@ -712,10 +688,6 @@ Return ONLY raw JSON.`;
         }
       }
     }
-
-    // -----------------------------------------------------
-    // DETERMINISTIC BRAIN FALLBACK
-    // -----------------------------------------------------
 
     const brainAnalysis =
       evaluateSpeakingWithBrain({
@@ -734,7 +706,6 @@ Return ONLY raw JSON.`;
       evaluationMode:
         "examiner-intelligence-brain",
     });
-
   } catch (err: any) {
     console.error(
       "Error in transcribe-and-evaluate-audio:",
@@ -763,7 +734,6 @@ async function startServer() {
     });
 
     app.use(vite.middlewares);
-
   } else {
     const distPath = path.join(
       process.cwd(),
@@ -794,4 +764,3 @@ async function startServer() {
 }
 
 startServer();
-```
