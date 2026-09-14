@@ -13,6 +13,8 @@ export default defineConfig(() => {
       },
     },
     server: {
+      host: '0.0.0.0',
+      allowedHosts: ['site--vocabino-backend--qk6n2px2g77r.code.run'],
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
