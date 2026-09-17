@@ -331,7 +331,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
       // Format filename with candidate name and TRF number for direct identification and auto-verification
       const cleanCandidateName = candidateName.trim().replace(/[^a-zA-Z0-9_-]/g, "_") || "Candidate";
       const cleanTrf = trfNumber.replace(/[^a-zA-Z0-9_-]/g, "_");
-      const filename = `Lingofi_IELTS_TRF_${cleanCandidateName}_${cleanTrf}.png`;
+      const filename = `Vocabino_IELTS_TRF_${cleanCandidateName}_${cleanTrf}.png`;
 
       // Download directly as an image file (PNG)
       const link = document.createElement("a");
@@ -434,7 +434,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
             IELTS Test Report Form (TRF)
           </h2>
           <p className="mt-3 text-sm text-slate-600 leading-relaxed max-w-lg mx-auto font-medium">
-            Under official Lingofi examination regulations, an authentic TRF certificate is issued only after you complete a test.
+            Under official Vocabino examination regulations, an authentic TRF certificate is issued only after you complete a test.
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-left">
@@ -499,7 +499,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
                 onClick={() => onOpenVerificationPortal?.()}
                 className="font-bold text-blue-700 underline hover:text-blue-900 cursor-pointer"
               >
-                It can be verified at lingofi
+                It can be verified at Vocabino
               </button>
             </div>
           </div>
@@ -534,7 +534,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
             CRITICAL SECURITY NOTICE: If you lose a pattern key your certificate won't be regenerated.
           </p>
           <p className="mt-0.5 text-xs text-amber-900 leading-relaxed">
-            Your certificate is cryptographically signed with your unique pattern key (<span className="font-mono font-black text-amber-950">{trfNumber}</span>). Under Lingofi examination regulations: if you lose a pattern key your certificate won't be regenerated. Please download or print your official certificate now and store your key safely. It can be verified at lingofi.
+            Your certificate is cryptographically signed with your unique pattern key (<span className="font-mono font-black text-amber-950">{trfNumber}</span>). Under Vocabino examination regulations: if you lose a pattern key your certificate won't be regenerated. Please download or print your official certificate now and store your key safely. It can be verified at Vocabino.
           </p>
         </div>
       </div>
@@ -569,7 +569,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
             </span>
           </div>
           <h2 className="mt-1 text-2xl font-extrabold text-slate-900 tracking-tight">
-            Lingofi Official IELTS Test Report Form (TRF)
+            Vocabino Official IELTS Test Report Form (TRF)
           </h2>
           <p className="text-xs text-slate-500">
             Certified Academic Certificate with dynamic cryptographic security ID, candidate photo verification, and central bit-matching.
@@ -827,7 +827,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04]">
               <div className="h-[480px] w-[480px] rounded-full border-[18px] border-[#002d62] flex items-center justify-center">
                 <span className="font-serif font-black text-6xl text-[#002d62] tracking-widest uppercase">
-                  LINGOFI
+                  Vocabino
                 </span>
               </div>
             </div>
@@ -982,7 +982,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
                         <div className="h-24 w-24 rounded-full border-2 border-red-700/80 p-0.5 rotate-12 flex items-center justify-center text-center">
                           <div className="h-full w-full rounded-full border border-dashed border-red-700/70 flex flex-col items-center justify-center">
                             <span className="text-[6px] font-black font-sans text-red-700 uppercase tracking-tighter">
-                              LINGOFI BIOMETRICS
+                              Vocabino BIOMETRICS
                             </span>
                             <span className="text-[7px] font-black font-sans text-red-700 uppercase">
                               * VERIFIED *
@@ -1089,7 +1089,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
                     </span>
                   </div>
                   <p className="text-[8px] text-slate-600 leading-tight">
-                    <strong>No physical signature required.</strong> Officially generated and certified directly by the Lingofi Central Assessment Authority.
+                    <strong>No physical signature required.</strong> Officially generated and certified directly by the Vocabino Central Assessment Authority.
                   </p>
                   <div className="mt-2 pt-1 border-t border-slate-200 text-[7px] font-mono text-slate-400">
                     FINGERPRINT: {shaFingerprint}
@@ -1123,7 +1123,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
                       <div className="h-full w-full rounded-full border border-amber-200 flex flex-col items-center justify-center p-1 bg-gradient-to-tr from-amber-500 via-amber-400 to-amber-200">
                         <Award className="h-6 w-6 text-amber-950 drop-shadow-xs" />
                         <span className="text-[6px] font-black font-sans text-amber-950 uppercase tracking-tighter leading-none mt-0.5">
-                          LINGOFI SEAL
+                          Vocabino SEAL
                         </span>
                         <span className="text-[5px] font-bold font-sans text-amber-900 leading-none">
                           OFFICIAL TRF
@@ -1143,7 +1143,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
                 </div>
 
                 <div className="text-right max-w-md text-[7.5px] leading-tight text-slate-400">
-                  The validity of this IELTS Test Report Form can be verified directly. It can be verified at lingofi without bar/QR code scanning. Any modification of document bits, candidate biometrics, or cryptographic codes constitutes document forgery.
+                  The validity of this IELTS Test Report Form can be verified directly. It can be verified at Vocabino without bar/QR code scanning. Any modification of document bits, candidate biometrics, or cryptographic codes constitutes document forgery.
                 </div>
               </div>
             </div>
@@ -1161,7 +1161,7 @@ export const CertificateTRF: React.FC<CertificateTRFProps> = ({
           <div>
             <h4 className="text-sm font-bold text-slate-900">How Direct Verification Works for Organizations</h4>
             <p className="text-xs text-slate-600 mt-0.5">
-              This certificate carries <strong>no scanning criteria</strong>. Recognizing organizations verify directly: It can be verified at lingofi, where our system evaluates all cryptographic pattern tokens and identity credentials to confirm 100% original authenticity against the central examination ledger.
+              This certificate carries <strong>no scanning criteria</strong>. Recognizing organizations verify directly: It can be verified at Vocabino, where our system evaluates all cryptographic pattern tokens and identity credentials to confirm 100% original authenticity against the central examination ledger.
             </p>
           </div>
         </div>
